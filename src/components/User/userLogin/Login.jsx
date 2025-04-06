@@ -26,7 +26,7 @@ export default function Login() {
 
   // Google Login Implementation
   const googleSignIn = useGoogleLogin({
-    clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID || "172635673249-28l59cndnruhbkchsultcj9ci86hftn8.apps.googleusercontent.com",
+    clientId:  "172635673249-28l59cndnruhbkchsultcj9ci86hftn8.apps.googleusercontent.com",
     onSuccess: async (response) => {
       try {
         setGoogleLoading(true);
@@ -42,12 +42,12 @@ export default function Login() {
             timeout: 5000
           }
         );
-
+  
         // Verify we got valid user data
         if (!googleResponse.data?.email) {
           throw new Error('Failed to get user info from Google');
         }
-
+  
         // Send to your backend
         const backendResponse = await googleLogin({
           email: googleResponse.data.email,
@@ -55,7 +55,7 @@ export default function Login() {
           googleId: googleResponse.data.id,
           profilePic: googleResponse.data.picture
         });
-
+  
         // Handle backend response
         if (backendResponse.data?.success) {
           const userData = backendResponse.data.userDatas || backendResponse.data.userData;
@@ -86,7 +86,8 @@ export default function Login() {
       setGoogleLoading(false);
     },
     scope: 'profile email',
-    ux_mode: 'popup',
+    ux_mode: 'redirect', // Changed from popup to redirect
+    redirect_uri: window.location.origin // Matches your deployed URL
   });
 
   const handleChange = (e) => {
