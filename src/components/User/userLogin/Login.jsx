@@ -29,8 +29,8 @@ export default function Login() {
 useEffect(() => {
 const googledata=async()=>{
   try {
-    if (user) {
-      console.log(user.access_token,"hiiiloo");
+    
+      console.log(user.access_token,"hiiilooiiii");
       
       const response=await axios
           .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
@@ -73,7 +73,7 @@ const googledata=async()=>{
           
         }
       }
-  }
+  
   } catch (error) {
     console.log(error);
   }
