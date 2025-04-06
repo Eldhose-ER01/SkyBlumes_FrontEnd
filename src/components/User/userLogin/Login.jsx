@@ -30,7 +30,7 @@ useEffect(() => {
 const googledata=async()=>{
   try {
     if (user) {
-      console.log(user,"hiii");
+      console.log(user.access_token,"hiii");
       
       const response=await axios
           .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
