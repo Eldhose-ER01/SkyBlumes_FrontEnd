@@ -19,66 +19,72 @@ export default function Login() {
   const[datas,setDatas]=useState(loginValues)
   const[Block,setBlock]=useState(null)
   const [user, setUser] = useState([])
-  const Glogin = useGoogleLogin({
-    onSuccess: (codeResponse) => setUser(codeResponse),
-    onError: (error) => console.log('Login Failed:', error)
-});
+//   const Glogin = useGoogleLogin({
+//     onSuccess: (codeResponse) => setUser(codeResponse),
+//     onError: (error) => console.log('Login Failed:', error)
+// });
 
 
 
-useEffect(() => {
-const googledata=async()=>{
-  try {
-    
-      console.log(user.access_token,"hiiilooiiii");
-      
-      const response=await axios
-          .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-              headers: {
-                  Authorization: `Bearer ${user.access_token}`,
-                  Accept: 'application/json'
-              }
-          })
-           
-          const Gdetails=await googleLogin(response.data)
-        
-          
-          if(Gdetails.data.success){
-            if(Gdetails.data.userDatas){
 
-           
-
-           localStorage.setItem('usertoken', JSON.stringify(Gdetails.data.userDatas.token));
-          dispatch(
-            addUser({
-              id: Gdetails.data.userDatas.id,
-              username: Gdetails.data.userDatas.username,
-              token: Gdetails.data.userDatas.token,
-            })
-          );
-          toast.success("Login successfull")
-          navigate('/');
-        }else if (Gdetails.data.userData) {
-          
-          localStorage.setItem('usertoken', JSON.stringify(Gdetails.data.userData.token));
-          dispatch(
-            addUser({
-              id: Gdetails.data.userData.id,
-              username: Gdetails.data.userData.username,
-              token: Gdetails.data.userData.token,
-            })
-          )
-          toast.success("Login successfull")
-          navigate('/');
-          
-        }
+const Glogin = useGoogleLogin({
+  clientId: "172635673249-28l59cndnruhbkchsultcj9ci86hftn8.apps.googleusercontent.com",
+  onSuccess: async (response) => {
+    try {
+      if (!response.access_token) {
+        throw new Error('No access token received');
       }
+
+      const googleResponse = await axios.get(
+        'https://www.googleapis.com/oauth2/v1/userinfo',
+        {
+          headers: {
+            Authorization: `Bearer ${response.access_token}`,
+            Accept: 'application/json'
+          },
+          timeout: 5000
+        }
+      );
+
+      if (!googleResponse.data?.id) {
+        throw new Error('Invalid user data from Google');
+      }
+
+      const backendResponse = await googleLogin({
+        email: googleResponse.data.email,
+        name: googleResponse.data.name,
+        googleId: googleResponse.data.id
+      });
+
+      if (backendResponse.data?.success) {
+        const userData = backendResponse.data.userDatas || backendResponse.data.userData;
+        if (userData?.token) {
+          localStorage.setItem('usertoken', JSON.stringify(userData.token));
+          dispatch(addUser({
+            id: userData.id,
+            username: userData.username,
+            token: userData.token
+          }));
+          navigate('/');
+        }
+      } else {
+        throw new Error('Backend authentication failed');
+      }
+    } catch (error) {
+      console.error('Authentication error:', error);
+      toast.error(error.message || "Login failed");
+    }
+  },
+  onError: (error) => {
+    console.error('Google OAuth error:', error);
+    toast.error("Couldn't connect to Google");
+  },
+  scope: 'profile email',
+  ux_mode: 'popup',
+});
+useEffect(() => {
   
-  } catch (error) {
-    console.log(error);
-  }
-}
-googledata()
+  Glogin()
 }, [user])
 
   const handlechange=(e)=>{
