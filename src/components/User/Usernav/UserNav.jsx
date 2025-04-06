@@ -40,7 +40,7 @@ const UserNav = () => {
           {/* Center: Logo */}
           <div className="flex-shrink-0 flex items-center">
             <span className="text-xl font-bold text-gray-800">
-              <img className='w-20 sm:w-24' src="../../../../public/static/Images/Screenshot 2025-03-20 161642-Photoroom.png" />
+              <img className='w-20 sm:w-24' src="/static/Images/Screenshot 2025-03-20 161642-Photoroom.png" />
             </span>
           </div>
 

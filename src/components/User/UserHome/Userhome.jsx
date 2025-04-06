@@ -48,7 +48,7 @@ const [currentPage, setCurrentPage] = useState(1);
         {/* Banner Image with Gradient Overlay */}
         <div className="absolute inset-0">
           <img
-            src="../../../../public/static/Images/pexels-pixabay-147411.jpg"
+            src="/static/Images/pexels-pixabay-147411.jpg"
             alt="Banner"
             className="w-full h-full object-cover"
           />
