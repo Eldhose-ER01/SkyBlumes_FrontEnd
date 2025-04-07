@@ -1,11 +1,11 @@
-import { useState,useEffect } from 'react';
-import { UserLogin,googleLogin } from '../../../configure/user';
+import { useState } from 'react';
+import { UserLogin } from '../../../configure/user';
 import '../style.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../../redux/userSlice';
 import {useForm} from "react-hook-form"
-import { useGoogleLogin } from "@react-oauth/google";
+// import { useGoogleLogin } from "@react-oauth/google";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 export default function Login() {
@@ -19,67 +19,67 @@ export default function Login() {
   const[datas,setDatas]=useState(loginValues)
   const[Block,setBlock]=useState(null)
   const [user, setUser] = useState([])
-  const Glogin = useGoogleLogin({
-    onSuccess: (codeResponse) => setUser(codeResponse),
-    onError: (error) => console.log('Login Failed:', error)
-});
+//   const Glogin = useGoogleLogin({
+//     onSuccess: (codeResponse) => setUser(codeResponse),
+//     onError: (error) => console.log('Login Failed:', error)
+// });
 
 
 
-useEffect(() => {
-const googledata=async()=>{
-  try {
-    if (user) {
-      console.log("hiii");
+// useEffect(() => {
+// const googledata=async()=>{
+//   try {
+//     if (user) {
+//       console.log("hiii");
       
-      const response=await axios
-          .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-              headers: {
-                  Authorization: `Bearer ${user.access_token}`,
-                  Accept: 'application/json'
-              }
-          })
+//       const response=await axios
+//           .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+//               headers: {
+//                   Authorization: `Bearer ${user.access_token}`,
+//                   Accept: 'application/json'
+//               }
+//           })
            
-          const Gdetails=await googleLogin(response.data)
+//           const Gdetails=await googleLogin(response.data)
         
           
-          if(Gdetails.data.success){
-            if(Gdetails.data.userDatas){
+//           if(Gdetails.data.success){
+//             if(Gdetails.data.userDatas){
 
            
 
-           localStorage.setItem('usertoken', JSON.stringify(Gdetails.data.userDatas.token));
-          dispatch(
-            addUser({
-              id: Gdetails.data.userDatas.id,
-              username: Gdetails.data.userDatas.username,
-              token: Gdetails.data.userDatas.token,
-            })
-          );
-          toast.success("Login successfull")
-          navigate('/');
-        }else if (Gdetails.data.userData) {
+//            localStorage.setItem('usertoken', JSON.stringify(Gdetails.data.userDatas.token));
+//           dispatch(
+//             addUser({
+//               id: Gdetails.data.userDatas.id,
+//               username: Gdetails.data.userDatas.username,
+//               token: Gdetails.data.userDatas.token,
+//             })
+//           );
+//           toast.success("Login successfull")
+//           navigate('/');
+//         }else if (Gdetails.data.userData) {
           
-          localStorage.setItem('usertoken', JSON.stringify(Gdetails.data.userData.token));
-          dispatch(
-            addUser({
-              id: Gdetails.data.userData.id,
-              username: Gdetails.data.userData.username,
-              token: Gdetails.data.userData.token,
-            })
-          )
-          toast.success("Login successfull")
-          navigate('/');
+//           localStorage.setItem('usertoken', JSON.stringify(Gdetails.data.userData.token));
+//           dispatch(
+//             addUser({
+//               id: Gdetails.data.userData.id,
+//               username: Gdetails.data.userData.username,
+//               token: Gdetails.data.userData.token,
+//             })
+//           )
+//           toast.success("Login successfull")
+//           navigate('/');
           
-        }
-      }
-  }
-  } catch (error) {
-    console.log(error);
-  }
-}
-googledata()
-}, [user])
+//         }
+//       }
+//   }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
+// googledata()
+// }, [user])
 
   const handlechange=(e)=>{
     const {value,name}= e.target
@@ -175,14 +175,14 @@ googledata()
               <p className="mx-3 text-gray-400 font-bold uppercase">or</p>
               <hr className="w-full border-t-2 border-gray-200 mr-1 dark:border-gray-700" />
             </div>
-            <div className="mt-5 flex flex-col items-center justify-center ">
+            {/* <div className="mt-5 flex flex-col items-center justify-center ">
               <button className="w-[80%] h-11 rounded-lg border-2 border-black  flex justify-center"onClick={()=>Glogin()}>
                 <img
                   src="https://cdn-teams-slug.flaticon.com/google.jpg"
                   className="w-10 h-10 rounded-xl  "
                 />
               </button>
-            </div>
+            </div> */}
             <p className="text-blue-700 mt-4 ml-12 text-left mb-10 cursor-pointer">
               Need an account?<span onClick={() => navigate("/register")}>SIGN UP</span>
             </p>
