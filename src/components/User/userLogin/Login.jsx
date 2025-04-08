@@ -27,59 +27,46 @@ export default function Login() {
 
 
 useEffect(() => {
-const googledata=async()=>{
-  try {
-    if (user) {
-      console.log("hiii");
-      
-      const response=await axios
-          .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-              headers: {
-                  Authorization: `Bearer ${user.access_token}`,
-                  Accept: 'application/json'
-              }
-          })
-           
-          const Gdetails=await googleLogin(response.data)
-        
-          
-          if(Gdetails.data.success){
-            if(Gdetails.data.userDatas){
+  const googledata = async () => {
+    try {
+      if (user && user.access_token) {
+        const response = await axios.get(
+          `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.access_token}`,
+              Accept: 'application/json',
+            },
+          }
+        );
 
-           
+        const Gdetails = await googleLogin(response.data);
 
-           localStorage.setItem('usertoken', JSON.stringify(Gdetails.data.userDatas.token));
-          dispatch(
-            addUser({
-              id: Gdetails.data.userDatas.id,
-              username: Gdetails.data.userDatas.username,
-              token: Gdetails.data.userDatas.token,
-            })
-          );
-          toast.success("Login successfull")
-          navigate('/');
-        }else if (Gdetails.data.userData) {
-          
-          localStorage.setItem('usertoken', JSON.stringify(Gdetails.data.userData.token));
-          dispatch(
-            addUser({
-              id: Gdetails.data.userData.id,
-              username: Gdetails.data.userData.username,
-              token: Gdetails.data.userData.token,
-            })
-          )
-          toast.success("Login successfull")
-          navigate('/');
-          
+        if (Gdetails.data.success) {
+          const userData = Gdetails.data.userDatas || Gdetails.data.userData;
+
+          if (userData) {
+            localStorage.setItem('usertoken', JSON.stringify(userData.token));
+            dispatch(
+              addUser({
+                id: userData.id,
+                username: userData.username,
+                token: userData.token,
+              })
+            );
+            toast.success("Login successful");
+            navigate('/');
+          }
         }
       }
-  }
-  } catch (error) {
-    console.log(error);
-  }
-}
-googledata()
-}, [user])
+    } catch (error) {
+      console.error("Google login error:", error);
+    }
+  };
+
+  googledata();
+}, [user]);
+
 
   const handlechange=(e)=>{
     const {value,name}= e.target
