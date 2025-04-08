@@ -16,7 +16,7 @@
     "apexcharts": "^4.5.0",
     "axios": "^1.6.8",
     "client": "file:",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.4.7",
     "gapi-script": "^1.2.0",
     "react": "^18.2.0",
     "react-apexcharts": "^1.7.0",
