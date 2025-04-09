@@ -25,11 +25,12 @@ export default function SelectStates() {
 
   const filterdatas = (statename) => {
     setSelectedState(statename); // Set selected state
+  
+    // Filter by statename
     const filtered = states.filter((value) => value.statename === statename);
   
-    const unique = Array.from(
-      new Map(filtered.map(item => [item.districtname, item])).values()
-    );
+    // Remove duplicates (if any) - assuming full object uniqueness
+    const unique = Array.from(new Set(filtered.map(JSON.stringify))).map(JSON.parse);
   
     setFilterData(unique);
   };
