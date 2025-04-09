@@ -64,7 +64,7 @@ const [currentPage, setCurrentPage] = useState(1);
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8">
             Discover the best experiences with us. Book now and enjoy exclusive offers!
           </p>
-            <button className='w-52 bg-sky-400 hover:bg-red-600 hover:text-white  h-12 text-black font-semibold'onClick={()=>navigate("/selectstate")}>
+            <button className='w-52 bg-green-400 hover:bg-red-600 hover:text-white  h-12 text-black font-semibold'onClick={()=>navigate("/selectstate")}>
               Book Now
           </button>
         </div>
