@@ -25,9 +25,15 @@ export default function SelectStates() {
 
   const filterdatas = (statename) => {
     setSelectedState(statename); // Set selected state
-    const filter = states.filter((value) => value.statename === statename);
-    setFilterData(filter);
+    const filtered = states.filter((value) => value.statename === statename);
+  
+    const unique = Array.from(
+      new Map(filtered.map(item => [item.districtname, item])).values()
+    );
+  
+    setFilterData(unique);
   };
+  
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
