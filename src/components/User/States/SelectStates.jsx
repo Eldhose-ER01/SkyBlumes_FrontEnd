@@ -79,7 +79,7 @@ export default function SelectStates() {
           {currentItems.map((state) => (
             <div key={state.id} className="bg-white rounded-md shadow-xl flex flex-col h-full">
               <img
-                src={`${userApi}/Images/${state.image}`}
+                src={state.image}
                 className="w-full h-48 object-cover overflow-hidden hover:scale-105 rounded-md"
                 alt={state.districtname}
               />

@@ -3,7 +3,6 @@ import { useState,useEffect } from 'react';
 import Footer from '../Footer/Footer';
 import { useNavigate } from 'react-router-dom';
 import { finddistrict } from '../../../configure/admin';
-import { userApi } from '../../../configure/api';
 export default function Userhome() {
     const [states, setStates] = useState([]);
   
@@ -77,7 +76,7 @@ const [currentPage, setCurrentPage] = useState(1);
     {currentItems.map((state) => (
       <div key={state.id} className="bg-white rounded-md shadow-xl flex flex-col h-full">
         <img
-          src={`${userApi}/Images/${state.image}`}
+          src={state.image}
           className="w-full h-48 object-cover overflow-hidden  rounded-md"
           alt={state.districtname}
         />

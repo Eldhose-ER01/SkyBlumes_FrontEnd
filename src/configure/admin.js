@@ -33,11 +33,7 @@ export const StatusChange=async(id)=>{
 
 export const AddStateAndistrict = async (data) => {
     try {
-      const response = await adminAxiosInstance.post('/addstate-district', data,{
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      });
+      const response = await adminAxiosInstance.post('/addstate-district', {data});
       return response;
     } catch (error) {
       console.log(error);
@@ -71,11 +67,7 @@ export const StateandDisrictDelete=async(id)=>{
 }
 export const editStateAndDistrict=async(data)=>{
     try {
-        const response=await adminAxiosInstance.post('/editstates',data,{
-            headers: {
-              "Content-Type": "multipart/form-data"
-            }
-          })
+        const response=await adminAxiosInstance.post('/editstates',{data})
         return response
     } catch (error) {
         console.log(error);
@@ -85,11 +77,8 @@ export const editStateAndDistrict=async(data)=>{
 
 export const Destinations=async(data)=>{
     try {
-        const response=await adminAxiosInstance.post('/adddestinations',data,{
-            headers: {
-                "Content-Type": "multipart/form-data"
-              }
-        })
+        const response=await adminAxiosInstance.post('/adddestinations',{data}
+           )
         return response
     } catch (error) {
         console.log(error);
@@ -120,11 +109,7 @@ export const finddistrict=async()=>{
 
 export const editdestination=async(data)=>{
     try {
-        const response=await adminAxiosInstance.post('/editdestination',data,{
-            headers: {
-                "Content-Type": "multipart/form-data"
-              }
-        })
+        const response=await adminAxiosInstance.post('/editdestination',{data})
         return response
     } catch (error) {
         console.log(error);

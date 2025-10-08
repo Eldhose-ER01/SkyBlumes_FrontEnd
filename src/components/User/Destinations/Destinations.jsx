@@ -58,7 +58,7 @@ export default function Destinations() {
                   >
                     {destination.selectedImages.map((image, index) => (
                       <SwiperSlide key={index}>
-                        <img src={`${userApi}/Images/${image}`} alt="" className="w-full h-full object-cover rounded-md" />
+                        <img src={image} alt="" className="w-full h-full object-cover rounded-md" />
                       </SwiperSlide>
                     ))}
                   </Swiper>
